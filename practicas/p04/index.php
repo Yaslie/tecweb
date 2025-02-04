@@ -62,5 +62,24 @@
     unset($a, $b, $c);
 ?>
 
+
+<?php
+    echo "<h2>Ejercicio 3: Evolución de Variables</h2>";
+
+    $a = "PHP5";
+    @$z[] = &$a;
+    $b = "5a version de PHP";
+    @$c = $b * 10;
+    $a .= $b;
+    @$b *= $c;
+    $z[0] = "MySQL";
+
+    echo "<pre>";
+    print_r(compact('a', 'b', 'c', 'z'));
+    echo "</pre>";
+
+    unset($a, $b, $c, $z);
+?>
+
 </body>
 </html>
