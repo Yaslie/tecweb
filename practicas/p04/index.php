@@ -30,5 +30,37 @@
         // Liberar variables
         unset($_myvar, $_7var, $myvar, $var7, $_element1);
     ?>
+
+<?php
+    echo "<h2>Ejercicio 2: Valores de variables</h2>";
+
+    // Definición de variables
+    $a = "ManejadorSQL";
+    $b = 'MySQL';
+    $c = &$a; // Referencia
+
+    echo "<p>Valores iniciales:</p>";
+    echo "<ul>";
+    echo "<li>a: $a</li>";
+    echo "<li>b: $b</li>";
+    echo "<li>c: $c</li>";
+    echo "</ul>";
+
+    $a = "PHP server";
+    $b = &$a;
+
+    echo "<p>Valores después de la nueva asignación:</p>";
+    echo "<ul>";
+    echo "<li>a: $a</li>";
+    echo "<li>b: $b</li>";
+    echo "<li>c: $c</li>";
+    echo "</ul>";
+
+    echo "<p>Explicación: Como \$c es una referencia a \$a, cualquier cambio en \$a afecta a \$c.</p>";
+
+    // Liberar varables
+    unset($a, $b, $c);
+?>
+
 </body>
 </html>
