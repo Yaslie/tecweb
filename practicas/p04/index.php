@@ -156,6 +156,15 @@
     unset($a, $b, $c, $d, $e, $f);
 ?>
 
+<?php
+    echo "<h2>Ejercicio 7: Uso de \$_SERVER</h2>";
+
+    echo "<ul>";
+    echo "<li>Versión de Apache y PHP: " . $_SERVER['SERVER_SOFTWARE'] . "</li>";
+    echo "<li>Nombre del sistema operativo: " . php_uname() . "</li>";
+    echo "<li>Idioma del navegador: " . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "</li>";
+    echo "</ul>";
+?>
 
 
 </body>
