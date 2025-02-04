@@ -117,6 +117,23 @@
     unset($a, $b, $c, $z);
 ?>
 
+<?php
+    echo "<h2>Ejercicio 5: Casting de Tipos</h2>";
+
+    $a = "7 personas";
+    $b = (integer) $a;
+    $a = "9E3";
+    $c = (double) $a;
+
+    echo "<ul>";
+    echo "<li>a: $a</li>"; // 9000
+    echo "<li>b: $b</li>"; // 7
+    echo "<li>c: $c</li>"; // 9000.0
+    echo "</ul>";
+    unset($a, $b, $c);
+?>
+
+
 
 </body>
 </html>
