@@ -81,5 +81,42 @@
     unset($a, $b, $c, $z);
 ?>
 
+<?php
+    echo "<h2>Ejercicio 4: Uso de \$GLOBALS y global</h2>";
+
+    // Definición de variables globales
+    $a = "PHP5";
+    $z[] = &$a;
+    $b = "5a version de PHP";
+    @$c = $b * 10;
+    $a .= $b;
+    @$b *= $c;
+    $z[0] = "MySQL";
+
+    echo "<h3>Usando \$GLOBALS:</h3>";
+    echo "<pre>";
+    print_r(array(
+        "a" => $GLOBALS['a'],
+        "b" => $GLOBALS['b'],
+        "c" => $GLOBALS['c'],
+        "z" => $GLOBALS['z']
+    ));
+    echo "</pre>";
+
+    function mostrarVariables() {
+        global $a, $b, $c, $z;
+        echo "<h3>Usando global:</h3>";
+        echo "<pre>";
+        print_r(compact('a', 'b', 'c', 'z'));
+        echo "</pre>";
+    }
+
+    mostrarVariables();
+
+    // Liberar variables
+    unset($a, $b, $c, $z);
+?>
+
+
 </body>
 </html>
