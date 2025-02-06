@@ -63,4 +63,15 @@ function crear_arreglo_letras() {
 }
 //funcion 4 final
 
+
+//funcion 5 inicio
+function validarEdadSexo($edad, $sexo) {
+    if ($sexo == 'femenino' && $edad >= 18 && $edad <= 35) {
+        return "Bienvenida, usted está en el rango de edad permitido.";
+    } else {
+        return "Error: No cumple con los requisitos de edad o sexo.";
+    }
+}
+// funcion 5 final
+
 ?>

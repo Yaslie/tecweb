@@ -83,6 +83,29 @@
 <!--ejercicio 4 final-->
 
 
+<!--ejercicio 5 inicio-->
+<h2>Ejercicio 5: Validar Edad y Sexo</h2>
+    <form method="post">
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" id="edad" required><br><br>
+
+        <label for="sexo">Sexo:</label>
+        <select name="sexo" id="sexo">
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+        </select><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edad']) && isset($_POST['sexo'])) {
+        require_once 'src/funciones.php';
+        echo validarEdadSexo($_POST['edad'], $_POST['sexo']);
+    }
+    ?>
+    <hr>
+<!--ejercicio 5 final-->
+
+
 <!--ejemplo post inicio-->
 <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
@@ -98,5 +121,6 @@
         }
     ?>
 <!--ejemplo post final-->
+
 </body>
 </html>
