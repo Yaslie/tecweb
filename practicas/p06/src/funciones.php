@@ -7,4 +7,30 @@ function es_multiplo($num)
         echo '<h3>R= El número ' . $num . ' NO es múltiplo de 5 y 7.</h3>';
     }
 }
+
+// 2. Generar números aleatorios hasta obtener la secuencia impar, par, impar
+function generar_secuencia() {
+    $secuencia = [];
+    $filas = 0;
+
+    // Generar números hasta obtener una secuencia impar, par, impar
+    while (true) {
+        $numeros = [rand(100, 999), rand(100, 999), rand(100, 999)];
+        $filas++;
+
+        // Verifica si la secuencia es impar, par, impar
+        if ($numeros[0] % 2 != 0 && $numeros[1] % 2 == 0 && $numeros[2] % 2 != 0) {
+            $secuencia[] = $numeros;
+            break;
+        }
+        $secuencia[] = $numeros;
+    }
+
+    return [
+        'secuencia' => $secuencia,
+        'total_numeros' => count($secuencia) * 3,
+        'iteraciones' => $filas
+    ];
+}
+
 ?>
