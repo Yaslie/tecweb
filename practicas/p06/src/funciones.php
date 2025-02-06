@@ -52,4 +52,15 @@ function buscar_multiplo($numero_dado) {
 }
 //funcion 3 final
 
+
+//funcion 4 inicio
+function crear_arreglo_letras() {
+    $arreglo = [];
+    for ($i = 97; $i <= 122; $i++) {
+        $arreglo[$i] = chr($i);
+    }
+    return $arreglo;
+}
+//funcion 4 final
+
 ?>

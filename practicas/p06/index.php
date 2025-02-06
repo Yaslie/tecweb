@@ -67,6 +67,22 @@
 <!--ejercicio 3 final-->
 
 
+<!--ejercicio 4 inicio-->
+<h2>Ejercicio 4: Crear y mostrar arreglo con letras de a => z</h2>
+    <?php
+    require_once 'src/funciones.php';
+    $arreglo_letras = crear_arreglo_letras();
+    echo "<h3>Arreglo de letras:</h3><table border='1'>
+            <tr><th>Índice</th><th>Letra</th></tr>";
+    foreach ($arreglo_letras as $key => $value) {
+        echo "<tr><td>$key</td><td>$value</td></tr>";
+    }
+    echo "</table>";
+    ?>
+    <hr>
+<!--ejercicio 4 final-->
+
+
 <!--ejemplo post inicio-->
 <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
