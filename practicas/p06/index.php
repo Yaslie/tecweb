@@ -49,6 +49,24 @@
     <hr>
 <!--ejercicio 2 final-->
 
+
+<!--ejercicio 3 inicio-->
+<h2>Ejercicio 3: Buscar múltiplo de un número dado (usando while)</h2>
+    <form method="get">
+        <label for="multiplo">Número para encontrar múltiplo:</label>
+        <input type="number" name="multiplo" id="multiplo">
+        <input type="submit" value="Buscar Múltiplo">
+    </form>
+    <?php
+    if (isset($_GET['multiplo']) && is_numeric($_GET['multiplo'])) {
+        require_once 'src/funciones.php';
+        echo buscar_multiplo($_GET['multiplo']);
+    }
+    ?>
+    <hr>
+<!--ejercicio 3 final-->
+
+
 <!--ejemplo post inicio-->
 <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
