@@ -69,9 +69,9 @@
 
 		<?php elseif(!empty($id)) : ?>
 
-			 <script>
+			<script>
                 alert('El ID del producto no existe');
-             </script>
+            </script>
 
 		<?php endif; ?>
 	</body>
