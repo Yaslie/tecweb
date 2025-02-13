@@ -52,7 +52,7 @@
             $result->free();
         }
 
-        /** Cerrar conexión */
+        /** Cerrar conexión a base de datos */
         $link->close();
     } else {
         echo '<div class="alert alert-danger">Parámetro "tope" no válido o no proporcionado.</div>';
