@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Práctica 5 – Variables en PHP</title>
+    <title>Práctica 4 – Variables en PHP</title>
 </head>
 <body>
     <h2>Ejercicio 1: Variables válidas e inválidas</h2>
@@ -166,6 +166,9 @@
     echo "</ul>";
 ?>
 
-
+<p>
+    <a href="https://validator.w3.org/markup/check?uri=referer"><img
+    src="https://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+</p>
 </body>
 </html>
