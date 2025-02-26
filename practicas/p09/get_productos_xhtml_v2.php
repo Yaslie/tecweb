@@ -29,7 +29,7 @@
                 "Unidades: " + unidades + "\n" +
                 "Detalles: " + detalles
             );
-            window.location.href = "formulario_productos_v2.html?id=" + id +
+            window.location.href = "formulario_productos_v3.html?id=" + id +
                 "&nombre=" + encodeURIComponent(nombre) +
                 "&marca=" + encodeURIComponent(marca) +
                 "&modelo=" + encodeURIComponent(modelo) +

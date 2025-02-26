@@ -1,40 +1,33 @@
 <?php
 
 $link = mysqli_connect("localhost", "root", "Alaskita123", "marketzone");
-
-if ($link === false) {
-    die("ERROR: No pudo conectarse con la DB. " . mysqli_connect_error());
+if (!$link) {
+    die("ERROR: No pudo conectarse con la BD. " . mysqli_connect_error());
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $nombre = $_POST['nombre'];
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $precio = $_POST['precio'];
-    $unidades = $_POST['unidades'];
-    $detalles = $_POST['detalles'];
-    $imagenes = $_POST['imagenes'];
+$id = intval($_POST['id']);
+$nombre = mysqli_real_escape_string($link, $_POST['nombre']);
+$marca = mysqli_real_escape_string($link, $_POST['marca']);
+$modelo = mysqli_real_escape_string($link, $_POST['modelo']);
+$precio = floatval($_POST['precio']);
+$unidades = intval($_POST['unidades']);
+$detalles = mysqli_real_escape_string($link, $_POST['detalles']);
+$imagenes = mysqli_real_escape_string($link, $_POST['imagenes']);
 
-    // Query para actualizar el producto
-    $sql = "UPDATE productos SET 
-                nombre='$nombre', 
-                marca='$marca', 
-                modelo='$modelo', 
-                precio=$precio, 
-                unidades=$unidades, 
-                detalles='$detalles', 
-                imagenes='$imagenes' 
-            WHERE id=$id";
+$sql = "UPDATE productos 
+        SET nombre='$nombre', marca='$marca', modelo='$modelo', precio=$precio, 
+            unidades=$unidades, detalles='$detalles', imagenes='$imagenes'
+        WHERE id=$id";
 
-    if (mysqli_query($link, $sql)) {
-        echo "Producto actualizado correctamente. (≧◡≦)";
-    } else {
-        echo "ERROR: No se pudo actualizar el producto. " . mysqli_error($link);
-    }
+if (mysqli_query($link, $sql)) {
+    echo "Producto actualizado correctamente.<br>";
 } else {
-    echo "Acceso no válido.";
+    echo "ERROR: No se pudo actualizar el producto. " . mysqli_error($link);
 }
 
 mysqli_close($link);
+
+// Enlaces para volver
+echo '<br><a href="get_productos_xhtml_v2.php">Volver a la lista de productos</a>';
+echo '<br><a href="get_productos_vigentes_v2.php">Ver productos vigentes</a>';
 ?>

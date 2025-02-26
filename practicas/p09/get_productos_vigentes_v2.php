@@ -20,7 +20,7 @@
             var detalles = data[6].textContent;
             var imagenes = row.querySelector("img").src; 
 
-            window.location.href = "formulario_productos_v2.html?id=" + id +
+            window.location.href = "formulario_productos_v3.html?id=" + id +
                 "&nombre=" + encodeURIComponent(nombre) +
                 "&marca=" + encodeURIComponent(marca) +
                 "&modelo=" + encodeURIComponent(modelo) +

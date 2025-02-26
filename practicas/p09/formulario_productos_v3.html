@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificación de Producto</title>
+    <script>
+        window.onload = function () {
+            var params = new URLSearchParams(window.location.search);
+
+            var id = document.getElementById("id");
+            var nombre = document.getElementById("nombre");
+            var marca = document.getElementById("marca");
+            var modelo = document.getElementById("modelo");
+            var precio = document.getElementById("precio");
+            var unidades = document.getElementById("unidades");
+            var detalles = document.getElementById("detalles");
+            var imagenes = document.getElementById("imagenes");
+
+            if (params.has("id")) id.value = params.get("id");
+            if (params.has("nombre")) nombre.value = params.get("nombre");
+            if (params.has("marca")) marca.value = params.get("marca");
+            if (params.has("modelo")) modelo.value = params.get("modelo");
+            if (params.has("precio")) precio.value = params.get("precio");
+            if (params.has("unidades")) unidades.value = params.get("unidades");
+            if (params.has("detalles")) detalles.value = params.get("detalles");
+            if (params.has("imagenes")) imagenes.value = params.get("imagenes");
+        };
+    </script>
+</head>
+<body>
+    <h2>Modificación de Producto</h2>
+    <form id="form-producto" action="update_producto.php" method="post">
+        <input type="hidden" id="id" name="id"> 
+
+        <label>Nombre del Producto:</label>
+        <input type="text" id="nombre" name="nombre"><br>
+
+        <label>Marca:</label>
+        <input type="text" id="marca" name="marca"><br>
+
+        <label>Modelo:</label>
+        <input type="text" id="modelo" name="modelo"><br>
+
+        <label>Precio:</label>
+        <input type="number" id="precio" name="precio" step="0.01"><br>
+
+        <label>Detalles:</label>
+        <textarea id="detalles" name="detalles"></textarea><br>
+
+        <label>Unidades Disponibles:</label>
+        <input type="number" id="unidades" name="unidades" min="0"><br>
+
+        <label>Imagen (URL):</label>
+        <input type="text" id="imagenes" name="imagenes"><br>
+
+        <input type="submit" value="Modificar Producto">
+    </form>
+</body>
+</html>
