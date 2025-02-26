@@ -2,14 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Producto</title>
+    <title>Modificación de Producto</title>
+    <script>
+        window.onload = function () {
+            var params = new URLSearchParams(window.location.search);
+
+            document.getElementById("id").value = params.get("id") || "";
+            document.getElementById("nombre").value = params.get("nombre") || "";
+            document.getElementById("marca").value = params.get("marca") || "";
+            document.getElementById("modelo").value = params.get("modelo") || "";
+            document.getElementById("precio").value = params.get("precio") || "";
+            document.getElementById("unidades").value = params.get("unidades") || "";
+            document.getElementById("detalles").value = params.get("detalles") || "";
+            document.getElementById("imagenes").value = params.get("imagenes") || "";
+        };
+    </script>
 </head>
 <body>
-    <!-- Se ha optado por un modelo nuevo de formulario en el que se da a entender que 
-    es un frmulario de modificacion y no nuevo registro, ademas de que se eliminan las
-    validaciones pues no son utilizables-->
-    <h2>Modificacion de Producto</h2>
-    <form id="form-producto" action="" method="post" onsubmit="validarFormulario(event)">
+    <h2>Modificación de Producto</h2>
+    <form id="form-producto" action="modificar_producto.php" method="post">
+        <input type="hidden" id="id" name="id"> 
+
         <label>Nombre del Producto:</label>
         <input type="text" id="nombre" name="nombre"><br>
 
@@ -31,7 +44,7 @@
         <label>Imagen (URL):</label>
         <input type="text" id="imagenes" name="imagenes"><br>
 
-        <input type="submit" value="Modficar Producto">
+        <input type="submit" value="Modificar Producto">
     </form>
 </body>
 </html>

@@ -4,46 +4,30 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Lista de Productos Vigentes</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <script>
         function show(event) {
-            var rowId = event.target.parentNode.parentNode.id;
-            var data = document.getElementById(rowId).querySelectorAll(".row-data");
+            var row = event.target.closest("tr"); 
+            var data = row.querySelectorAll(".row-data");
 
-            var id = data[0].innerHTML;
-            var nombre = data[1].innerHTML;
-            var marca = data[2].innerHTML;
-            var modelo = data[3].innerHTML;
-            var precio = data[4].innerHTML;
-            var unidades = data[5].innerHTML;
-            var detalles = data[6].innerHTML;
-            var imagen = data[7].querySelector("img").src;
+            var id = data[0].textContent;
+            var nombre = data[1].textContent;
+            var marca = data[2].textContent;
+            var modelo = data[3].textContent;
+            var precio = data[4].textContent;
+            var unidades = data[5].textContent;
+            var detalles = data[6].textContent;
+            var imagenes = row.querySelector("img").src; 
 
-            alert("Producto seleccionado:\n" +
-                  "ID: " + id + "\n" +
-                  "Nombre: " + nombre + "\n" +
-                  "Marca: " + marca + "\n" +
-                  "Modelo: " + modelo + "\n" +
-                  "Precio: " + precio + "\n" +
-                  "Unidades: " + unidades + "\n" +
-                  "Detalles: " + detalles);
-
-            send2form(id, nombre, marca, modelo, precio, unidades, detalles, imagen);
-        }
-
-        function send2form(id, nombre, marca, modelo, precio, unidades, detalles, imagen) {
-            var url = "formulario_productos_v2.html" +
-                      "?id=" + encodeURIComponent(id) +
-                      "&nombre=" + encodeURIComponent(nombre) +
-                      "&marca=" + encodeURIComponent(marca) +
-                      "&modelo=" + encodeURIComponent(modelo) +
-                      "&precio=" + encodeURIComponent(precio) +
-                      "&unidades=" + encodeURIComponent(unidades) +
-                      "&detalles=" + encodeURIComponent(detalles) +
-                      "&imagen=" + encodeURIComponent(imagen);
-
-            window.location.href = url;
+            window.location.href = "formulario_productos_v2.html?id=" + id +
+                "&nombre=" + encodeURIComponent(nombre) +
+                "&marca=" + encodeURIComponent(marca) +
+                "&modelo=" + encodeURIComponent(modelo) +
+                "&precio=" + precio +
+                "&unidades=" + unidades +
+                "&detalles=" + encodeURIComponent(detalles) +
+                "&imagenes=" + encodeURIComponent(imagenes);
         }
     </script>
 </head>
@@ -65,21 +49,20 @@
             if ($result->num_rows > 0) {
                 echo '<table class="table">';
                 echo '<thead class="thead-dark">';
-                echo '<tr><th>#</th><th>Nombre</th><th>Marca</th><th>Modelo</th><th>Precio</th><th>Unidades</th><th>Detalles</th><th>Imagen</th><th>Acción</th></tr>';
+                echo '<tr><th>#</th><th>Nombre</th><th>Marca</th><th>Modelo</th><th>Precio</th><th>Unidades</th><th>Detalles</th><th>Imagen</th><th>Acciones</th></tr>';
                 echo '</thead><tbody>';
 
                 while ($row = $result->fetch_assoc()) {
-                    $id = htmlspecialchars($row['id']);
-                    echo '<tr id="row-' . $id . '">';
-                    echo '<td class="row-data">' . $id . '</td>';
+                    echo '<tr>';
+                    echo '<td class="row-data">' . htmlspecialchars($row['id']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['nombre']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['marca']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['modelo']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['precio']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['unidades']) . '</td>';
                     echo '<td class="row-data">' . htmlspecialchars($row['detalles']) . '</td>';
-                    echo '<td class="row-data"><img src="' . htmlspecialchars($row['imagenes']) . '" width="100" height="100"/></td>';
-                    echo '<td><button class="btn btn-primary" onclick="show(event)">Seleccionar</button></td>';
+                    echo '<td><img src="' . htmlspecialchars($row['imagenes']) . '" width="100" height="100"/></td>';
+                    echo '<td><button class="btn btn-primary" onclick="show(event)">Modificar</button></td>';
                     echo '</tr>';
                 }
 
@@ -87,8 +70,6 @@
             } else {
                 echo '<div class="alert alert-warning">No hay productos vigentes con unidades menores o iguales a ' . $tope . '.</div>';
             }
-
-            /** Liberar resultados */
             $result->free();
         }
 
