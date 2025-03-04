@@ -1,15 +1,21 @@
 <?php
-    $conexion = @mysqli_connect(
-        'localhost',
-        'root',
-        'Alaskita123',
-        'marketzone'
-    );
+class Database {
+    private $host = "localhost";
+    private $user = "root";
+    private $pass = "Alaskita123";
+    private $dbname = "marketzone";
+    private $conn;
 
-    /**
-     * NOTA: si la conexión falló $conexion contendrá false
-     **/
-    if(!$conexion) {
-        die('¡Base de datos NO conextada!');
+    public function __construct() {
+        $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
+
+        if ($this->conn->connect_error) {
+            die("Error de conexión: " . $this->conn->connect_error);
+        }
     }
+
+    public function getConnection() {
+        return $this->conn;
+    }
+}
 ?>

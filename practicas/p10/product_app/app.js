@@ -1,5 +1,6 @@
 // JSON BASE A MOSTRAR EN FORMULARIO
 var baseJSON = {
+    "nombre": "",
     "precio": 0.0,
     "unidades": 1,
     "modelo": "XX-000",
@@ -18,32 +19,34 @@ function buscarProducto(e) {
         return;
     }
 
-    // Si es numérico, asumimos que es un ID; de lo contrario, es una búsqueda general
     var parametros = isNaN(termino) ? { q: termino } : { id: termino };
     realizarBusqueda(parametros);
 }
 
 // FUNCIÓN GENÉRICA PARA REALIZAR BÚSQUEDAS
 function realizarBusqueda(parametros) {
-    var client = getXMLHttpRequest();
+    var client = new XMLHttpRequest();
     client.open('POST', './backend/read.php', true);
     client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     client.onreadystatechange = function () {
-        if (client.readyState == 4 && client.status == 200) {
-            console.log('[CLIENTE] Respuesta recibida:\n' + client.responseText);
-            try {
-                let productos = JSON.parse(client.responseText);
+        if (client.readyState == 4) {
+            if (client.status == 200) {
+                try {
+                    let productos = JSON.parse(client.responseText);
 
-                // Si la respuesta es un solo objeto en lugar de un array, lo convertimos a array
-                if (!Array.isArray(productos)) {
-                    productos = [productos];
+                    if (!Array.isArray(productos)) {
+                        productos = [productos];
+                    }
+
+                    mostrarProductos(productos);
+                } catch (error) {
+                    console.error("Error al procesar la respuesta del servidor:", error);
+                    alert("Error al procesar la respuesta del servidor.");
+                    mostrarProductos([]);
                 }
-
-                mostrarProductos(productos);
-            } catch (error) {
-                console.error("Error al procesar la respuesta del servidor:", error);
-                mostrarProductos([]);
+            } else {
+                alert("Error en la solicitud. Código: " + client.status);
             }
         }
     };
@@ -51,6 +54,7 @@ function realizarBusqueda(parametros) {
     var params = Object.keys(parametros)
         .map(key => key + '=' + encodeURIComponent(parametros[key]))
         .join('&');
+
     client.send(params);
 }
 
@@ -79,48 +83,72 @@ function mostrarProductos(productos) {
             tabla.innerHTML += fila;
         });
     } else {
-        tabla.innerHTML = "<tr><td colspan='3'>No se encontraron productos.</td></tr>";
+        tabla.innerHTML = "<tr><td colspan='3'> No se encontraron productos.</td></tr>";
     }
 }
 
 // FUNCIÓN CALLBACK DE BOTÓN "Agregar Producto"
 function agregarProducto(e) {
     e.preventDefault();
-    var productoJsonString = document.getElementById('description').value;
-    var finalJSON = JSON.parse(productoJsonString);
-    finalJSON['nombre'] = document.getElementById('name').value;
-    productoJsonString = JSON.stringify(finalJSON, null, 2);
-
-    var client = getXMLHttpRequest();
-    client.open('POST', './backend/create.php', true);
-    client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
-    
-    client.onreadystatechange = function () {
-        if (client.readyState == 4 && client.status == 200) {
-            console.log(client.responseText);
-        }
-    };
-
-    client.send(productoJsonString);
-}
-
-// SE CREA EL OBJETO DE CONEXIÓN COMPATIBLE CON EL NAVEGADOR
-function getXMLHttpRequest() {
-    var objetoAjax;
     try {
-        objetoAjax = new XMLHttpRequest();
-    } catch (err1) {
-        try {
-            objetoAjax = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (err2) {
-            try {
-                objetoAjax = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (err3) {
-                objetoAjax = false;
-            }
+        var nombre = document.getElementById('name').value.trim();
+        var productoJsonString = document.getElementById('description').value.trim();
+
+        if (nombre === "") {
+            alert(" El nombre del producto no puede estar vacío.");
+            return;
         }
+
+        var finalJSON = JSON.parse(productoJsonString);
+        finalJSON['nombre'] = nombre;
+
+        finalJSON['precio'] = parseFloat(finalJSON['precio']);
+        finalJSON['unidades'] = parseInt(finalJSON['unidades']);
+
+        if (isNaN(finalJSON['precio']) || finalJSON['precio'] <= 0) {
+            alert("⚠️ El precio debe ser un número válido y mayor a 0.");
+            return;
+        }
+
+        if (isNaN(finalJSON['unidades']) || finalJSON['unidades'] < 0) {
+            alert("⚠️ Las unidades deben ser un número válido y mayor o igual a 0.");
+            return;
+        }
+
+        if (!finalJSON.hasOwnProperty('imagen')) {
+            finalJSON['imagen'] = "img/default.png";
+        }
+
+        productoJsonString = JSON.stringify(finalJSON, null, 2);
+
+        var client = new XMLHttpRequest();
+        client.open('POST', './backend/create.php', true);
+        client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
+
+        client.onreadystatechange = function () {
+            if (client.readyState == 4) {
+                if (client.status == 200) {
+                    try {
+                        let respuesta = JSON.parse(client.responseText);
+                        if (respuesta.success) {
+                            alert("✅ Producto agregado correctamente. ID: " + respuesta.id);
+                        } else {
+                            alert("⚠️ Error: " + (respuesta.mensaje || "Error desconocido en el servidor."));
+                        }
+                    } catch (error) {
+                        console.error("Error en la respuesta del servidor:", client.responseText);
+                        alert(" Error en la respuesta del servidor.");
+                    }
+                } else {
+                    alert("Error en la solicitud. Código: " + client.status);
+                }
+            }
+        };
+
+        client.send(productoJsonString);
+    } catch (error) {
+        alert(" Error al procesar los datos. Verifica el JSON.");
     }
-    return objetoAjax;
 }
 
 // FUNCIÓN PARA INICIALIZAR EL FORMULARIO
