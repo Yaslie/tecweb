@@ -152,7 +152,10 @@ function agregarProducto(e) {
      * 
      * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
      */
-
+    if (!finalJSON['nombre'] || finalJSON['nombre'].length > 100) {
+        alert('El nombre es requerido y no puede tener más de 100 caracteres.');
+        return;
+    }
     // SE REALIZA LA PETICIÓN AJAX
     $.ajax({
         url: './backend/product-add.php',
