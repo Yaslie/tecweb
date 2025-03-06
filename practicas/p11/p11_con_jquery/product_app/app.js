@@ -179,7 +179,7 @@ function agregarProducto(e) {
 
 // FUNCIÓN CALLBACK DE BOTÓN "Eliminar"
 function eliminarProducto() {
-    if (confirm("De verdad deseas eliinar el Producto")) {
+    if (confirm("¿De verdad deseas eliminar el producto?")) {
         var id = $(event.target).closest('tr').attr("productId");
 
         // SE REALIZA LA PETICIÓN AJAX
