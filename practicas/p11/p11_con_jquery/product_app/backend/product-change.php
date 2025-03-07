@@ -33,11 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $modelo = $datos['modelo'];
     $marca = $datos['marca'];
     $detalles = $datos['detalles'];
-    $imagen = $datos['imagen'];
+    $imagenes = isset($datos['imagenes']) ? $datos['imagenes'] : null;  // Si no existe, asigna null
 
-    $query = "UPDATE productos SET nombre=?, precio=?, unidades=?, modelo=?, marca=?, detalles=?, imagen=? WHERE id=?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("sdissssi", $nombre, $precio, $unidades, $modelo, $marca, $detalles, $imagen, $id);
+    // Actualización de los datos en la base de datos
+    $query = "UPDATE productos SET nombre=?, precio=?, unidades=?, modelo=?, marca=?, detalles=?, imagenes=? WHERE id=?";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("sdissssi", $nombre, $precio, $unidades, $modelo, $marca, $detalles, $imagenes, $id);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success", "message" => "Producto actualizado correctamente"]);
