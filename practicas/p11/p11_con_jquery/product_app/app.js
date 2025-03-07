@@ -135,19 +135,67 @@ function agregarProducto(e) {
 
     if (id) finalJSON['id'] = id;
 
-    $.ajax({
-        url: url,
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(finalJSON, null, 2),
-        dataType: 'json',
-        success: function (respuesta) {
-            listarProductos();
-            $('#submit-btn').text('Agregar Producto').removeAttr('data-id');
-            $('#name').val('');
-            $('#description').val(JSON.stringify(baseJSON, null, 2));
-        }
-    });
+    // Validaciones
+    if (!finalJSON['nombre'] || finalJSON['nombre'].trim() === '') {
+        alert("El nombre del producto es obligatorio.");
+        return;
+    }
+
+    if (finalJSON['precio'] <= 100) {
+        alert("El precio debe ser mayor a 100.");
+        return;
+    }
+
+    if (id) {
+        // Comprobamos si el ID ya existe
+        $.ajax({
+            url: './backend/product-change.php',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (producto) {
+                if (producto) {
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(finalJSON, null, 2),
+                        dataType: 'json',
+                        success: function (respuesta) {
+                            if (respuesta.status === "success") {
+                                alert("Producto modificado con éxito.");
+                            } else {
+                                alert("Error al modificar producto: " + respuesta.message);
+                            }
+                            listarProductos();
+                            $('#submit-btn').text('Agregar Producto').removeAttr('data-id');
+                            $('#name').val('');
+                            $('#description').val(JSON.stringify(baseJSON, null, 2));
+                        }
+                    });
+                }
+            }
+        });
+    } else {
+        $.ajax({
+            url: url,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(finalJSON, null, 2),
+            dataType: 'json',
+            success: function (respuesta) {
+                if (respuesta.status === "success") {
+                    alert("Producto agregado con éxito.");
+                } else {
+                    alert("Error al agregar producto: " + respuesta.message);
+                }
+                listarProductos();
+                $('#submit-btn').text('Agregar Producto').removeAttr('data-id');
+                $('#name').val('');
+                $('#description').val(JSON.stringify(baseJSON, null, 2));
+            }
+        });
+    }
 }
 
 // FUNCIÓN PARA ELIMINAR UN PRODUCTO
