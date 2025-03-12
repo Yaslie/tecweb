@@ -1,19 +1,23 @@
 <?php
     include_once __DIR__.'/database.php';
-
+    
     // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
     $data = array(
         'status'  => 'error',
         'message' => 'La consulta falló'
     );
+
     // SE VERIFICA HABER RECIBIDO EL ID
-    if( isset($_GET['id']) ) {
-        $id = $_GET['id'];
+    if( isset($_POST['id']) ) {
+        $jsonOBJ = (object)$_POST;
         // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
-        $sql = "UPDATE productos SET eliminado=1 WHERE id = {$id}";
+        $sql =  "UPDATE productos SET nombre='{$jsonOBJ->nombre}', marca='{$jsonOBJ->marca}',";
+        $sql .= "modelo='{$jsonOBJ->modelo}', precio={$jsonOBJ->precio}, detalles='{$jsonOBJ->detalles}',"; 
+        $sql .= "unidades={$jsonOBJ->unidades}, imagenes='{$jsonOBJ->imagen}' WHERE id={$jsonOBJ->id}";
+        $conexion->set_charset("utf8");
         if ( $conexion->query($sql) ) {
             $data['status'] =  "success";
-            $data['message'] =  "Producto eliminado :D";
+            $data['message'] =  "Producto actualizado";
 		} else {
             $data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($conexion);
         }
