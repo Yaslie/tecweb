@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Tienda - Productos</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="public/js/validaciones.js"></script>  <!-- Script de validaciones -->
+</head>
+<body>
+
+    <h1>Gestión de Productos</h1>
+    
+    <!-- Formulario para agregar producto -->
+    <form id="product-form">
+        <input type="text" id="name" placeholder="Nombre" required>
+        <input type="text" id="form-marca" placeholder="Marca" required>
+        <input type="text" id="form-modelo" placeholder="Modelo" required>
+        <input type="number" id="form-precio" placeholder="Precio" required>
+        <input type="number" id="form-unidades" placeholder="Unidades" required>
+        <textarea id="form-detalles" placeholder="Detalles"></textarea>
+        <input type="file" id="form-imagen" placeholder="Imagen">
+        <button type="submit">Guardar Producto</button>
+    </form>
+
+    <h2>Lista de Productos</h2>
+    <div id="product-list"></div>
+
+    <script>
+        // Función para agregar producto
+        $('#product-form').submit(function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append('action', 'add');  // Acción para agregar producto
+
+            $.ajax({
+                url: 'public/router.php',  // Controlador en backend
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    alert("Producto agregado exitosamente.");
+                    loadProductList();  // Recargar la lista de productos
+                }
+            });
+        });
+
+        // Función para cargar la lista de productos
+        function loadProductList() {
+            $.ajax({
+                url: 'public/router.php',  // Controlador para listar productos
+                type: 'GET',
+                data: { action: 'list' },
+                success: function(response) {
+                    $('#product-list').html(response);
+                }
+            });
+        }
+
+        // Cargar productos al iniciar
+        loadProductList();
+    </script>
+
+</body>
+</html>
