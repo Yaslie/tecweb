@@ -21,8 +21,6 @@ function init() {
     editarProducto();
 }
 
-$(document).ready(function() {
-    // Función para listar productos
     function listarProductos() {
         $.ajax({
             url: 'backend/controllers/ProductController.php?action=list', // Apunta al controlador ProductController.php
@@ -61,9 +59,7 @@ $(document).ready(function() {
         });
     }
 
-    // Llamar a la función para listar los productos cuando cargue la página
-    listarProductos();
-});
+
 
 
 function buscarProducto() {
@@ -72,9 +68,9 @@ function buscarProducto() {
         if ($('#search').val()) {
             let search = $('#search').val();
             $.ajax({
-                url: 'backend/controllers/ProductController.php?action=search', // Cambié esto
+                url: 'backend/controllers/ProductController.php?action=search',
                 type: 'GET',
-                data: { search },
+                data: { search: search },
                 success: function(response) {
                     console.log("Response de buscar productos:", response); // Alerta para depuración
                     let products = JSON.parse(response);
@@ -120,6 +116,7 @@ function buscarProducto() {
     });
 }
 
+
 function agregarProducto() {
     $('#product-form').submit(function(e) {
         e.preventDefault();
@@ -143,10 +140,10 @@ function agregarProducto() {
             let result = typeof response === 'string' ? JSON.parse(response) : response;
             if (result.status === "success") {
                 alert("Registro exitoso");
-                listarProductos();
+                listarProductos(); // Actualiza la lista después de agregar o editar
                 $('#product-form').trigger('reset');
                 $('#description').val(JSON.stringify(baseJSON, null, 2));
-                editar = false;
+                editar = false; // Restaura el estado de edición
             } else {
                 alert(result.message);
             }
@@ -157,23 +154,30 @@ function agregarProducto() {
     });
 }
 
+
 function eliminarProducto() {
     $(document).on('click', '.product-delete', function() {
         let element = $(this)[0].parentElement.parentElement;
         let id = $(element).attr('productId');
         if (confirm(`¿Estás seguro de eliminar el producto con ID: ${id}?`)) {
-            $.get('backend/controllers/ProductController.php?action=delete', { id }, function(response) {
-                console.log("Response de eliminar producto:", response); // Alerta para depuración
-                let result = JSON.parse(response);
-                if (result.status === "success") {
-                    alert("Eliminado exitosamente");
-                    listarProductos();
-                } else {
-                    alert("Error al eliminar el producto: " + result.message);
+            $.ajax({
+                url: 'backend/controllers/ProductController.php?action=delete',
+                type: 'GET',
+                data: { id: id }, // Se asegura de enviar el ID como parámetro
+                success: function(response) {
+                    console.log("Response de eliminar producto:", response); // Alerta para depuración
+                    let result = JSON.parse(response);
+                    if (result.status === "success") {
+                        alert("Eliminado exitosamente");
+                        listarProductos(); // Actualiza la lista después de eliminar
+                    } else {
+                        alert("Error al eliminar el producto: " + result.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Error al eliminar producto: " + error);
+                    console.error("Error al eliminar producto:", error); // Alerta de error para depuración
                 }
-            }).fail(function(xhr, status, error) {
-                alert("Error al eliminar producto: " + error);
-                console.error("Error al eliminar producto:", error); // Alerta de error para depuración
             });
         }
     });
@@ -183,21 +187,28 @@ function editarProducto() {
     $(document).on('click', '.product-item', function() {
         let element = $(this)[0].parentElement.parentElement;
         let id = $(element).attr('productId');
-        $.post('backend/controllers/ProductController.php?action=single', { id }, function(response) {
-            console.log("Response de editar producto:", response); // Alerta para depuración
-            const producto = JSON.parse(response);
-            $('#name').val(producto.nombre);
-            $('#product-Id').val(producto.id);
-            $('#form-marca').val(producto.marca);
-            $('#form-modelo').val(producto.modelo);
-            $('#form-precio').val(producto.precio);
-            $('#form-unidades').val(producto.unidades);
-            $('#form-detalles').val(producto.detalles);
-            $('#form-imagen').val(producto.imagen);
-            editar = true;
-        }).fail(function(xhr, status, error) {
-            alert("Error al editar producto: " + error);
-            console.error("Error al editar producto:", error); // Alerta de error para depuración
+        $.ajax({
+            url: 'backend/controllers/ProductController.php?action=single', // Cambié esto a AJAX
+            type: 'POST',  // Cambié a POST para enviar parámetros correctamente
+            data: { id: id },
+            success: function(response) {
+                console.log("Response de editar producto:", response); // Alerta para depuración
+                const producto = JSON.parse(response);
+                $('#name').val(producto.nombre);
+                $('#product-Id').val(producto.id);
+                $('#form-marca').val(producto.marca);
+                $('#form-modelo').val(producto.modelo);
+                $('#form-precio').val(producto.precio);
+                $('#form-unidades').val(producto.unidades);
+                $('#form-detalles').val(producto.detalles);
+                $('#form-imagen').val(producto.imagen);
+                editar = true;
+            },
+            error: function(xhr, status, error) {
+                alert("Error al editar producto: " + error);
+                console.error("Error al editar producto:", error); // Alerta de error para depuración
+            }
         });
     });
 }
+
