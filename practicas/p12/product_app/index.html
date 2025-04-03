@@ -6,7 +6,8 @@
     <!-- BOOTSTRAP 4  -->
     <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
   </head>
-  <body>
+  </head>
+  <body onload="init()">
 
     <!-- BARRA DE NAVEGACIÓN  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,14 +32,32 @@
             <div class="card-body">
               <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
               <form id="product-form">
+                <input type="hidden" id="product-id">
                 <div class="form-group">
-                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control" id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
+                  <div class="form-group">
+                    <input class="form-control" type="text" id="name" placeholder="Nombre de producto" required>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="text" id="marca" placeholder="Marca del producto">
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="text" id="modelo" placeholder="Modelo del producto">
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="number" id="precio" placeholder="Precio del producto" min="100" step="0.01">
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="number" id="unidades" placeholder="Unidades en stock" min="0">
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="text" id="detalles" placeholder="Detalles del producto (opcional)">
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" type="text" id="imagen" placeholder="URL de imagen">
+                  </div>                  
                 </div>
                 <input type="hidden" id="productId">
-                <button class="btn btn-primary btn-block text-center" type="submit">
+                <button class="btn btn-primary btn-block text-center" type="submit"  >
                   Agregar Producto
                 </button>
               </form>
