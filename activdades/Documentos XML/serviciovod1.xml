@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CatalogoVOD>
+    <cuenta>
+        <correo>usuario1@example.com</correo>
+        <perfiles>
+            <perfil>
+                <usuario>Usuario1</usuario>
+                <idioma>Español</idioma>
+            </perfil>
+            <perfil>
+                <usuario>Usuario2</usuario>
+                <idioma>Inglés</idioma>
+            </perfil>
+        </perfiles>
+    </cuenta>
+    <contenido>
+        <peliculas>
+            <genero>
+                <nombre>Acción</nombre>
+                <titulo>
+                    <nombre>Película 1</nombre>
+                    <duracion>120</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 2</nombre>
+                    <duracion>110</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 3</nombre>
+                    <duracion>130</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 4</nombre>
+                    <duracion>140</duracion>
+                </titulo>
+            </genero>
+            <genero>
+                <nombre>Comedia</nombre>
+                <titulo>
+                    <nombre>Película 5</nombre>
+                    <duracion>90</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 6</nombre>
+                    <duracion>95</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 7</nombre>
+                    <duracion>100</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Película 8</nombre>
+                    <duracion>105</duracion>
+                </titulo>
+            </genero>
+        </peliculas>
+        <programas>
+            <genero>
+                <nombre>Drama</nombre>
+                <titulo>
+                    <nombre>Programa 1</nombre>
+                    <duracion>45</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 2</nombre>
+                    <duracion>50</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 3</nombre>
+                    <duracion>55</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 4</nombre>
+                    <duracion>60</duracion>
+                </titulo>
+            </genero>
+            <genero>
+                <nombre>Documental</nombre>
+                <titulo>
+                    <nombre>Programa 5</nombre>
+                    <duracion>70</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 6</nombre>
+                    <duracion>75</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 7</nombre>
+                    <duracion>80</duracion>
+                </titulo>
+                <titulo>
+                    <nombre>Programa 8</nombre>
+                    <duracion>85</duracion>
+                </titulo>
+            </genero>
+        </programas>
+    </contenido>
+</CatalogoVOD>
