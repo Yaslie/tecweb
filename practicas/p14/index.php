@@ -33,5 +33,16 @@ $app->get("/testjson", function ($request, $response, $args) {
     return $response;
 });
 
+$app->post("/testjson", function ($request, $response, $args) {
+    $data = [];
+    $data[0]["nombre"] = "Yaslie";
+    $data[0]["apellidos"] = "Chavez";
+    $data[1]["nombre"] = "David";
+    $data[1]["apellidos"] = "Ponce Santos";
+
+    $response->getBody()->write(json_encode($data, JSON_PRETTY_PRINT));
+    return $response;
+});
+
 $app->run();
 ?>
